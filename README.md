@@ -37,7 +37,7 @@ cd C:\Users\nacho\Desktop\Lic. en Sistemas\3° añ\Ing-soft2\TP1
 python primos.py
 
 
-![Ejemplo de números primos](https://www.abcfichas.com/wp-content/uploads/2021/10/Que-son-los-Numeros-Primos-1024x725.jpg)
+[Ejemplo de números primos](https://www.abcfichas.com/wp-content/uploads/2021/10/Que-son-los-Numeros-Primos-1024x725.jpg)
 
 Para más información sobre los números primos, puedes visitar la siguiente página:  
 [Wikipedia - Números Primos](https://es.wikipedia.org/wiki/Número_primo)
