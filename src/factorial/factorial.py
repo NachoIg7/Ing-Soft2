@@ -23,20 +23,35 @@ def factorial(num):
 # Función para validar y extraer el rango
 def get_range(value):
     if '-' in value:
-        start, end = value.split('-')
-        if start.isdigit() and end.isdigit():
-            return int(start), int(end)
-        else:
-            print("Por favor, ingrese un rango válido con números enteros.")
-            return None
+        if value.startswith('-'):  # Caso de rango -hasta
+            end = value[1:]
+            if end.isdigit():
+                return 1, int(end)
+            else:
+                print("Por favor, ingrese un número válido después del guión.")
+                return None
+        elif value.endswith('-'):  # Caso de rango desde-
+            start = value[:-1]
+            if start.isdigit():
+                return int(start), 60
+            else:
+                print("Por favor, ingrese un número válido antes del guión.")
+                return None
+        else:  # Caso de rango desde-hasta
+            start, end = value.split('-')
+            if start.isdigit() and end.isdigit():
+                return int(start), int(end)
+            else:
+                print("Por favor, ingrese un rango válido en formato desde-hasta (ej. 4-8).")
+                return None
     else:
-        print("Por favor, ingrese un rango en el formato desde-hasta (ej. 4-8).")
+        print("Por favor, ingrese un rango en el formato adecuado.")
         return None
 
 # Verificar si se pasó un argumento en la línea de comandos
 if len(sys.argv) == 1:
     # Si no se pasa argumento, solicita el rango al usuario
-    num_input = input("Debe ingresar un rango (desde-hasta) para calcular los factoriales: ")
+    num_input = input("Debe ingresar un rango para calcular los factoriales: ")
     
     # Verificar si el input tiene formato correcto
     range_values = get_range(num_input)
