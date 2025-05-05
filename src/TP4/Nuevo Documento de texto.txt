@@ -1,0 +1,20 @@
+Situación donde aplicar patron flyweight:
+Imaginemos un caso donde desarrollamos un videojuego en 2D. En este escenario, podría haber en pantalla hasta 10.000 balas activas al mismo tiempo.
+Cada bala posee atributos como:
+
+Posición (x, y)
+
+Velocidad
+
+Sprite (imagen gráfica de la bala)
+
+Sonido de impacto
+
+Sin embargo, tanto el sprite como el sonido son exactamente los mismos para todas las balas. Lo único que varía entre ellas es la posición y la velocidad.
+
+-Problema sin aplicar Flyweight
+Si cada una de esas 10.000 balas almacenara su propia copia del sprite y del sonido, se produciría un alto consumo de memoria innecesario, ya que se estarían repitiendo recursos idénticos miles de veces.
+
+-Solución aplicando el patrón Flyweight
+La solución adecuada sería implementar una clase Flyweight que contenga los atributos compartidos (sprite y sonido), mientras que cada instancia de bala solo almacene los datos variables (posición y velocidad). De esta forma, todas las balas referenciarán la misma instancia compartida de sprite y sonido, optimizando el uso de recursos.
+
