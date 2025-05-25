@@ -2,12 +2,16 @@ import json
 import sys
 
 class JSONDataHandler:
-    """Clase para manejar la lectura y búsqueda en archivos JSON"""
+    """Clase Singleton para manejar la lectura y búsqueda en archivos JSON"""
     
-    def __init__(self, filename="sitedata.json"):
-        """Inicializa el manejador con el nombre del archivo JSON"""
-        self.filename = filename
-        self.data = None
+    _instance = None
+    
+    def __new__(cls, filename="sitedata.json"):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.filename = filename
+            cls._instance.data = None
+        return cls._instance
     
     def load_data(self):
         """Carga los datos del archivo JSON"""
@@ -25,7 +29,7 @@ class JSONDataHandler:
     def get_value(self, key):
         """Obtiene un valor del JSON por su clave"""
         if self.data is None:
-            raise ValueError("Los datos no han sido cargados. Llame a load_data() primero.")
+            self.load_data()
         
         if key in self.data:
             return self.data[key]
@@ -33,7 +37,14 @@ class JSONDataHandler:
             raise KeyError(f"La clave '{key}' no se encuentra en {self.filename}")
 
 class JSONDataPrinter:
-    """Clase para manejar la presentación de los resultados"""
+    """Clase para manejar la presentación de los resultados (también Singleton)"""
+    
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
     
     @staticmethod
     def print_success(key, value):
@@ -47,19 +58,17 @@ class JSONDataPrinter:
 
 def main():
     # Configuración inicial
-    json_file = "sitedata.json"
     default_key = "token1"
     
     # Obtener la clave desde argumentos, por defecto 'token1'
     key = sys.argv[1] if len(sys.argv) > 1 else default_key
     
-    # Crear instancias de las clases
-    data_handler = JSONDataHandler(json_file)
+    # Obtener las instancias Singleton
+    data_handler = JSONDataHandler()
     printer = JSONDataPrinter()
     
     try:
-        # Cargar y procesar los datos
-        data_handler.load_data()
+        # Obtener y mostrar el valor
         value = data_handler.get_value(key)
         printer.print_success(key, value)
         
